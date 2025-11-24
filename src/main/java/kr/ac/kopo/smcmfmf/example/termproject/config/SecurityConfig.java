@@ -19,7 +19,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/alpha.html", "/alpha1", "/alpha2", "/login", "/css/**", "/js/**", "/images/**", "/videos/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // [추가] 관리자 권한 필요
+                        .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자 권한 필요
                         .requestMatchers("/alpha3", "/alpha4", "/alpha5", "/order/**").authenticated()
                         .anyRequest().permitAll()
                 )
