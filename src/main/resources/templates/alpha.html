@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -301,13 +301,23 @@
             </div>
         </div>
 
-        <div class="dropdown">
+        <div class="dropdown" sec:authorize="!isAuthenticated()">
             <button class="dropbtn">MY PAGE ▼</button>
             <div class="dropdown-content">
                 <a href="/login">로그인</a>
                 <a href="/signup">회원가입</a>
             </div>
         </div>
+
+        <div class="dropdown" sec:authorize="isAuthenticated()">
+            <button class="dropbtn">
+                <span sec:authentication="name">User</span>님 ▼
+            </button>
+            <div class="dropdown-content">
+                <a href="/logout">로그아웃</a>
+            </div>
+        </div>
+
     </div>
 </nav>
 
@@ -318,34 +328,34 @@
     <div class="swiper-wrapper">
         <div class="swiper-slide">
             <a href="javascript:change4()">
-					<span class="ani">
-						<img src="/images/iX.png"></img>
-						BMW iX
-					</span>
+                <span class="ani">
+                   <img src="/images/iX.png"></img>
+                   BMW iX
+                </span>
             </a>
         </div>
         <div class="swiper-slide">
             <a href="javascript:change3()">
-					<span class="ani">
-						<img src="/images/i4_M450.png"></img>
-						BMW i4 M450
-					</span>
+                <span class="ani">
+                   <img src="/images/i4_M450.png"></img>
+                   BMW i4 M450
+                </span>
             </a>
         </div>
         <div class="swiper-slide">
             <a href="javascript:change2()" style="float: right;">
-					<span class="ani">
-						<img src="/images/THE7.png"></img>
-						BMW 7 Series
-					</span>
+                <span class="ani">
+                   <img src="/images/THE7.png"></img>
+                   BMW 7 Series
+                </span>
             </a>
         </div>
         <div class="swiper-slide">
             <a href="javascript:change1()" style="float: left;">
-					<span class="ani">
-						<img src="/images/THE5.png"></img>
-						BMW 5 Series
-					</span>
+                <span class="ani">
+                   <img src="/images/THE5.png"></img>
+                   BMW 5 Series
+                </span>
             </a>
         </div>
     </div>

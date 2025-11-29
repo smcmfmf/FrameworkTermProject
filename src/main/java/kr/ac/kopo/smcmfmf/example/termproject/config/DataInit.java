@@ -25,11 +25,12 @@ public class DataInit {
                 }
             }
 
+            // [수정] 이메일 데이터 추가 ("user@test.com", "admin@test.com")
             if (memberRepository.findByUsername("user").isEmpty()) {
-                memberRepository.save(new Member(null, "user", "1234", "서울시 강남구", "010-1111-2222", "ROLE_USER"));
+                memberRepository.save(new Member(null, "user", "user@test.com", "1234", "서울시 강남구", "010-1111-2222", "ROLE_USER"));
             }
             if (memberRepository.findByUsername("admin").isEmpty()) {
-                memberRepository.save(new Member(null, "admin", "1234", "본사 관리팀", "010-9999-8888", "ROLE_ADMIN"));
+                memberRepository.save(new Member(null, "admin", "admin@test.com", "1234", "본사 관리팀", "010-9999-8888", "ROLE_ADMIN"));
             }
         };
     }

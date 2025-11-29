@@ -15,6 +15,7 @@ public class Member {
 
     @Column(unique = true, nullable = false)
     private String username; // 아이디
+    private String email; // 이메일 필드
 
     @Column(nullable = false)
     private String password; // 비밀번호

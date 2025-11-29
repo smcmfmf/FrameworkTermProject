@@ -23,8 +23,15 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
+                        // [수정] 권한에 따른 리다이렉트 분기 처리
                         .successHandler((request, response, authentication) -> {
-                            response.sendRedirect("/");
+                            // 사용자의 권한 중 'ROLE_ADMIN'이 있는지 확인
+                            if (authentication.getAuthorities().stream()
+                                    .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+                                response.sendRedirect("/admin/list"); // 관리자면 관리자 페이지로
+                            } else {
+                                response.sendRedirect("/"); // 일반 회원은 메인 페이지로
+                            }
                         })
                         .permitAll()
                 )
