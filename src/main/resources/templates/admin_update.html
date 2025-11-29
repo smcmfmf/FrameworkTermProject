@@ -4,10 +4,123 @@
     <meta charset="UTF-8">
     <title>구매 정보 수정</title>
     <style>
-        body { background-color: #000051; color: white; text-align: center; font-family: 'GmarketSansBold', sans-serif; }
-        .container { background-color: #FFFFE5; color: black; padding: 30px; border-radius: 20px; display: inline-block; margin-top: 50px; }
-        input { padding: 5px; margin: 5px; }
-        button { padding: 10px 20px; background-color: #7EB1FF; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        @font-face {
+            font-family: 'GmarketSansBold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            background-color: #000051;
+            color: white;
+            text-align: center;
+            font-family: 'GmarketSansBold', sans-serif;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #FFFFE5;
+            color: black;
+            padding: 40px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 30px;
+            min-width: 500px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="week"],
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-family: 'GmarketSansBold', sans-serif;
+            font-size: 14px;
+        }
+
+        .form-group select:hover {
+            background-color: #D6FFFF;
+        }
+
+        .form-group input[type="text"]:disabled {
+            background-color: #e0e0e0;
+            color: #666;
+        }
+
+        .form-group input[type="radio"] {
+            margin-right: 5px;
+            margin-left: 15px;
+        }
+
+        .radio-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .radio-group label {
+            display: inline-flex;
+            align-items: center;
+            margin: 0;
+            font-weight: normal;
+        }
+
+        .button-group {
+            margin-top: 30px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 30px;
+            background-color: #7EB1FF;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'GmarketSansBold', sans-serif;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #5a8fd8;
+        }
+
+        .cancel-btn {
+            background-color: #ff7e7e;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'GmarketSansBold', sans-serif;
+            font-size: 16px;
+        }
+
+        .cancel-btn:hover {
+            background-color: #e05555;
+        }
+
+        h2 {
+            color: #000051;
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
@@ -16,29 +129,73 @@
     <form action="/admin/update" method="post">
         <input type="hidden" name="id" th:value="${item.id}">
 
-        <label>차량 모델:</label>
-        <input type="text" name="carModel" th:value="${item.carModel}"><br>
+        <div class="form-group">
+            <label>차량 모델</label>
+            <select name="carModel">
+                <option value="BMW iX" th:selected="${item.car.model == 'BMW iX'}">BMW iX</option>
+                <option value="BMW i4 M450" th:selected="${item.car.model == 'BMW i4 M450'}">BMW i4 M450</option>
+                <option value="BMW 5 Series" th:selected="${item.car.model == 'BMW 5 Series'}">BMW 5 Series</option>
+                <option value="BMW 7 Series" th:selected="${item.car.model == 'BMW 7 Series'}">BMW 7 Series</option>
+            </select>
+        </div>
 
-        <label>차량 색상:</label>
-        <input type="text" name="carColor" th:value="${item.carColor}"><br>
+        <div class="form-group">
+            <label>차량 색상</label>
+            <select name="carColor">
+                <option value="white" th:selected="${item.car.color == 'white'}">white</option>
+                <option value="black" th:selected="${item.car.color == 'black'}">black</option>
+                <option value="silver" th:selected="${item.car.color == 'silver'}">silver</option>
+                <option value="blue" th:selected="${item.car.color == 'blue'}">blue</option>
+                <option value="red" th:selected="${item.car.color == 'red'}">red</option>
+            </select>
+        </div>
 
-        <label>이용 목적:</label>
-        <input type="text" name="usagePurpose" th:value="${item.usagePurpose}"><br>
+        <div class="form-group">
+            <label>이용 목적</label>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="usagePurpose" value="개인"
+                           th:checked="${item.usagePurpose == '개인'}">
+                    개인
+                </label>
+                <label>
+                    <input type="radio" name="usagePurpose" value="영업"
+                           th:checked="${item.usagePurpose == '영업'}">
+                    영업
+                </label>
+                <label>
+                    <input type="radio" name="usagePurpose" value="법인"
+                           th:checked="${item.usagePurpose == '법인'}">
+                    법인
+                </label>
+            </div>
+        </div>
 
-        <label>인도 날짜:</label>
-        <input type="text" name="deliveryDate" th:value="${item.deliveryDate}"><br>
+        <div class="form-group">
+            <label>인도 날짜</label>
+            <input type="week" name="deliveryDate" th:value="${item.deliveryDate}" required>
+        </div>
 
-        <label>고객 이름:</label>
-        <input type="text" name="consumerName" th:value="${item.consumerName}"><br>
+        <div class="form-group">
+            <label>고객 이름 (수정 불가)</label>
+            <input type="text" th:value="${item.member.username}" disabled>
+        </div>
 
-        <label>전화 번호:</label>
-        <input type="text" name="consumerPhone" th:value="${item.consumerPhone}"><br>
+        <div class="form-group">
+            <label>전화 번호</label>
+            <input type="text" name="phone" th:value="${item.phone}"
+                   placeholder="010-1234-5678" required>
+        </div>
 
-        <label>이 메 일:</label>
-        <input type="text" name="consumerEmail" th:value="${item.consumerEmail}"><br><br>
+        <div class="form-group">
+            <label>이메일 (수정 불가)</label>
+            <input type="text" th:value="${item.member.email}" disabled>
+        </div>
 
-        <button type="submit">수정 완료</button>
-        <a href="/admin/list" style="margin-left: 10px; color: red;">취소</a>
+        <div class="button-group">
+            <button type="submit">수정 완료</button>
+            <a href="/admin/list" class="cancel-btn">취소</a>
+        </div>
     </form>
 </div>
 </body>

@@ -9,6 +9,7 @@ import kr.ac.kopo.smcmfmf.example.termproject.repository.PurchaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class AlphaController {
     @Autowired private PurchaseRepository purchaseRepository;
     @Autowired private MemberRepository memberRepository;
     @Autowired private CarRepository carRepository;
+    @Autowired private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String requestMethod() { return "alpha"; }
@@ -29,19 +31,22 @@ public class AlphaController {
     @GetMapping("/alpha2") public String alpha2() { return "alpha2"; }
     @GetMapping("/alpha3") public String alpha3() { return "alpha3"; }
 
-    // [추가] 회원가입 페이지 이동
     @GetMapping("/signup")
     public String signupForm() {
         return "signup";
     }
 
-    // [추가] 회원가입 처리 (DB 저장)
     @PostMapping("/join")
     public String join(Member member) {
+        // 비밀번호 암호화
+        member.setPassword(passwordEncoder.encode(member.getPassword()));
+
         // 기본 권한 설정 (일반 유저)
         member.setRole("ROLE_USER");
+
         // DB 저장
         memberRepository.save(member);
+
         // 가입 완료 후 로그인 페이지로 이동
         return "redirect:/login";
     }
@@ -112,8 +117,36 @@ public class AlphaController {
     }
 
     @PostMapping("/admin/update")
-    public String updateOrder(Purchase purchase) {
+    public String updateOrder(
+            @RequestParam Long id,
+            @RequestParam String carModel,
+            @RequestParam String carColor,
+            @RequestParam String usagePurpose,
+            @RequestParam String deliveryDate,
+            @RequestParam String phone
+    ) {
+        // 주문 정보 조회
+        Purchase purchase = purchaseRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("주문을 찾을 수 없습니다"));
+
+        // 변경하려는 차량 정보 찾기 또는 생성
+        Car car = carRepository.findByModelAndColor(carModel, carColor)
+                .orElseGet(() -> {
+                    Car newCar = new Car();
+                    newCar.setModel(carModel);
+                    newCar.setColor(carColor);
+                    return carRepository.save(newCar);
+                });
+
+        // Purchase의 car 참조 변경
+        purchase.setCar(car);
+        purchase.setUsagePurpose(usagePurpose);
+        purchase.setDeliveryDate(deliveryDate);
+        purchase.setPhone(phone);
+
+        // 변경사항 저장
         purchaseRepository.save(purchase);
+
         return "redirect:/admin/list";
     }
 }

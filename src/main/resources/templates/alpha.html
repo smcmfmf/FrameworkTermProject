@@ -296,8 +296,13 @@
             <div>
                 <a id="color2" href="/alpha2" onmouseover="over(this)" onmouseout="out(this)" onclick="return warning()">딜러사 주가</a>
             </div>
-            <div>
-                <a id="color3" href="/alpha3" onmouseover="over(this)" onmouseout="out(this)">구매하기</a>
+            <!-- 관리자인 경우 "구매 관리" 메뉴 표시 -->
+            <div sec:authorize="hasRole('ADMIN')">
+                <a id="color3" href="/admin/list" onmouseover="over(this)" onmouseout="out(this)">구매 관리</a>
+            </div>
+            <!-- 일반 사용자인 경우 "구매하기" 메뉴 표시 -->
+            <div sec:authorize="!hasRole('ADMIN')">
+                <a id="color3" href="/alpha3" onmouseover="over(this)" onmouseout="out(this)">구매하러 가기</a>
             </div>
         </div>
 

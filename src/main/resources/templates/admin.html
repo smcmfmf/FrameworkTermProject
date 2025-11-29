@@ -32,13 +32,13 @@
     <tbody>
     <tr th:each="item : ${list}">
         <td th:text="${item.id}">1</td>
-        <td th:text="${item.carModel}">iX</td>
-        <td th:text="${item.carColor}">White</td>
+        <td th:text="${item.car.model}">iX</td>
+        <td th:text="${item.car.color}">White</td>
         <td th:text="${item.usagePurpose}">개인</td>
         <td th:text="${item.deliveryDate}">2025-W16</td>
-        <td th:text="${item.consumerName}">홍길동</td>
-        <td th:text="${item.consumerPhone}">010-0000-0000</td>
-        <td th:text="${item.consumerEmail}">test@email.com</td>
+        <td th:text="${item.member.username}">홍길동</td>
+        <td th:text="${item.phone}">010-0000-0000</td>
+        <td th:text="${item.member.email}">test@email.com</td>
         <td>
             <a th:href="@{/admin/update/{id}(id=${item.id})}">수정</a> |
             <a th:href="@{/admin/delete/{id}(id=${item.id})}" class="btn-del" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
@@ -46,6 +46,6 @@
     </tr>
     </tbody>
 </table>
-    <a href="/" class="btn-home">메인으로</a>
+<a href="/" class="btn-home">메인으로</a>
 </body>
 </html>

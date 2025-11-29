@@ -7,12 +7,15 @@ import kr.ac.kopo.smcmfmf.example.termproject.repository.MemberRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class DataInit {
 
     @Bean
-    public CommandLineRunner initData(MemberRepository memberRepository, CarRepository carRepository) {
+    public CommandLineRunner initData(MemberRepository memberRepository,
+                                      CarRepository carRepository,
+                                      PasswordEncoder passwordEncoder) {
         return args -> {
             if (carRepository.count() == 0) {
                 String[] models = {"BMW iX", "BMW i4 M450", "BMW 5 Series", "BMW 7 Series"};
@@ -25,12 +28,29 @@ public class DataInit {
                 }
             }
 
-            // [수정] 이메일 데이터 추가 ("user@test.com", "admin@test.com")
+            // 초기 회원 데이터 생성 (비밀번호 암호화 적용)
             if (memberRepository.findByUsername("user").isEmpty()) {
-                memberRepository.save(new Member(null, "user", "user@test.com", "1234", "서울시 강남구", "010-1111-2222", "ROLE_USER"));
+                memberRepository.save(new Member(
+                        null,
+                        "user",
+                        "user@test.com",
+                        passwordEncoder.encode("1234"),
+                        "서울시 강남구",
+                        "010-1111-2222",
+                        "ROLE_USER"
+                ));
             }
+
             if (memberRepository.findByUsername("admin").isEmpty()) {
-                memberRepository.save(new Member(null, "admin", "admin@test.com", "1234", "본사 관리팀", "010-9999-8888", "ROLE_ADMIN"));
+                memberRepository.save(new Member(
+                        null,
+                        "admin",
+                        "admin@test.com",
+                        passwordEncoder.encode("1234"),
+                        "본사 관리팀",
+                        "010-9999-8888",
+                        "ROLE_ADMIN"
+                ));
             }
         };
     }
