@@ -7,18 +7,26 @@ import lombok.*;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString(exclude = {"member", "car"}) // 순환 참조 방지
 public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // 주문 번호
 
-    private String carModel;   // 차량 모델
-    private String carColor;   // 차량 색상
+    // Member와 다대일 관계 설정
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    // Car와 다대일 관계 설정
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_id")
+    private Car car;
+
     private String usagePurpose; // 이용 목적
     private String deliveryDate; // 인도 날짜
 
-    private String consumerName; // 고객 이름
-    private String consumerPhone; // 전화번호
-    private String consumerEmail; // 이메일
+    // 배송 정보 (회원 정보와 다를 수 있으므로 별도 저장 요청하신 대로 추가)
+    private String address;      // 배송 주소
+    private String phone;        // 배송 연락처
 }

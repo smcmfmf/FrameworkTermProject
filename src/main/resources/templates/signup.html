@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #000051;
+            font-family: 'GmarketSansBold', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @font-face {
+            font-family: 'GmarketSansBold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .login-container {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 320px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #000051;
+        }
+
+        .login-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #000051;
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .login-container button:hover {
+            background-color: #1a1a99;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h2>회원가입</h2>
+    <form action="/join" method="post">
+
+        <label for="username">아이디</label>
+        <input type="text" id="username" name="username" placeholder="아이디를 입력하세요" required>
+
+        <label for="password">비밀번호</label>
+        <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required>
+
+        <label for="address">주소</label>
+        <input type="text" id="address" name="address" placeholder="주소를 입력하세요">
+
+        <label for="phone">전화번호</label>
+        <input type="tel" id="phone" name="phone" placeholder="010-0000-0000">
+
+        <button type="submit">가입하기</button>
+    </form>
+</div>
+</body>
+</html>
