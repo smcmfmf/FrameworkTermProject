@@ -37,7 +37,25 @@ public class AlphaController {
     }
 
     @PostMapping("/join")
-    public String join(Member member) {
+    public String join(Member member, Model model) {
+        if (memberRepository.existsByUserId(member.getUserId())) {
+            model.addAttribute("error", "이미 사용 중인 아이디입니다.");
+            model.addAttribute("member", member);
+            return "signup";
+        }
+
+        if (memberRepository.existsByUserEmail(member.getUserEmail())) {
+            model.addAttribute("error", "이미 가입된 이메일입니다.");
+            model.addAttribute("member", member);
+            return "signup";
+        }
+
+        if (memberRepository.existsByUserPhone(member.getUserPhone())) {
+            model.addAttribute("error", "이미 가입된 전화번호입니다.");
+            model.addAttribute("member", member);
+            return "signup";
+        }
+
         member.setUserPassword(passwordEncoder.encode(member.getUserPassword()));
         member.setRole("ROLE_USER");
 

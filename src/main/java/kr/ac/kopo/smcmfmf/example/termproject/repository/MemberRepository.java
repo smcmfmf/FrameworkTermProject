@@ -8,4 +8,9 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member, Long> {
     // 로그인 시 아이디로 회원 조회
     Optional<Member> findByUserId(String userId);
+    
+    // 사용자 중복 확인
+    boolean existsByUserId(String userId);
+    boolean existsByUserEmail(String userEmail);
+    boolean existsByUserPhone(String userPhone);
 }
