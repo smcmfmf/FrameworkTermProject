@@ -14,13 +14,16 @@ public class Member {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String username; // 아이디
-    private String email; // 이메일 필드
+    private String userId; // 고객 아이디
 
     @Column(nullable = false)
-    private String password; // 비밀번호
+    private String userName; // 고객 성명
 
-    private String address;  // 주소
-    private String phone;    // 전화번호
-    private String role;     // 권한 (ROLE_USER, ROLE_ADMIN)
+    @Column(nullable = false)
+    private String userPassword; // 비밀번호
+
+    private String userEmail; // 이메일
+    private String userAddress; // 주소
+    private String userPhone; // 전화번호
+    private String role; // 권한 (ROLE_USER, ROLE_ADMIN)
 }

@@ -36,6 +36,16 @@
       color: #000051;
     }
 
+    .login-container h4 {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .login-container a {
+        text-decoration: none;
+        color: #88f426;
+    }
+
     .login-container label {
       display: block;
       margin-bottom: 8px;
@@ -77,8 +87,8 @@
   <body>
     <div class="login-container">
       <h2>로그인</h2>
-      <h4 style="text-align: center">고객 아이디 : user / 비밀번호 : 1234</h4> <!-- 고객 계정 안내 -->
-        <h4 style="text-align: center">관리자 아이디 : admin / 비밀번호 : 1234</h4> <!-- 관리자 계정 안내 -->
+      <h4>고객 아이디 : user / 비밀번호 : 1234</h4> <!-- 고객 계정 안내 -->
+      <h4>관리자 아이디 : admin / 비밀번호 : 1234</h4> <!-- 관리자 계정 안내 -->
 
       <div th:if="${param.error}" class="error">
         아이디 또는 비밀번호가 잘못되었습니다.
@@ -90,7 +100,7 @@
 
         <label for="password">비밀번호</label>
         <input type="password" id="password" name="password" required>
-
+        <h4><a href="/signup">회원가입 하기</a></h4>
         <button type="submit">로그인</button>
       </form>
     </div>

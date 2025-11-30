@@ -38,16 +38,11 @@ public class AlphaController {
 
     @PostMapping("/join")
     public String join(Member member) {
-        // 비밀번호 암호화
-        member.setPassword(passwordEncoder.encode(member.getPassword()));
-
-        // 기본 권한 설정 (일반 유저)
+        member.setUserPassword(passwordEncoder.encode(member.getUserPassword()));
         member.setRole("ROLE_USER");
 
-        // DB 저장
         memberRepository.save(member);
 
-        // 가입 완료 후 로그인 페이지로 이동
         return "redirect:/login";
     }
 
@@ -73,7 +68,7 @@ public class AlphaController {
             @RequestParam String deliveryDate,
             @RequestParam String consumerPhone
     ) {
-        Member member = memberRepository.findByUsername(userDetails.getUsername())
+        Member member = memberRepository.findByUserId(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("로그인 회원 정보 없음"));
 
         Car car = carRepository.findByModelAndColor(carModel, carColor)
@@ -84,7 +79,7 @@ public class AlphaController {
         purchase.setCar(car);
         purchase.setUsagePurpose(usagePurpose);
         purchase.setDeliveryDate(deliveryDate);
-        purchase.setAddress(member.getAddress());
+        purchase.setAddress(member.getUserAddress());
         purchase.setPhone(consumerPhone);
 
         purchaseRepository.save(purchase);
@@ -125,11 +120,9 @@ public class AlphaController {
             @RequestParam String deliveryDate,
             @RequestParam String phone
     ) {
-        // 주문 정보 조회
         Purchase purchase = purchaseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("주문을 찾을 수 없습니다"));
 
-        // 변경하려는 차량 정보 찾기 또는 생성
         Car car = carRepository.findByModelAndColor(carModel, carColor)
                 .orElseGet(() -> {
                     Car newCar = new Car();
@@ -138,13 +131,11 @@ public class AlphaController {
                     return carRepository.save(newCar);
                 });
 
-        // Purchase의 car 참조 변경
         purchase.setCar(car);
         purchase.setUsagePurpose(usagePurpose);
         purchase.setDeliveryDate(deliveryDate);
         purchase.setPhone(phone);
 
-        // 변경사항 저장
         purchaseRepository.save(purchase);
 
         return "redirect:/admin/list";

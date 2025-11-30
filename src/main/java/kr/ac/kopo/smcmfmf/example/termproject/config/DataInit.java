@@ -28,25 +28,26 @@ public class DataInit {
                 }
             }
 
-            // 초기 회원 데이터 생성 (비밀번호 암호화 적용)
-            if (memberRepository.findByUsername("user").isEmpty()) {
+            if (memberRepository.findByUserId("user").isEmpty()) {
                 memberRepository.save(new Member(
                         null,
                         "user",
-                        "user@test.com",
+                        "일반사용자",
                         passwordEncoder.encode("1234"),
+                        "user@test.com",
                         "서울시 강남구",
                         "010-1111-2222",
                         "ROLE_USER"
                 ));
             }
 
-            if (memberRepository.findByUsername("admin").isEmpty()) {
+            if (memberRepository.findByUserId("admin").isEmpty()) {
                 memberRepository.save(new Member(
                         null,
                         "admin",
-                        "admin@test.com",
+                        "관리자",
                         passwordEncoder.encode("1234"),
+                        "admin@test.com",
                         "본사 관리팀",
                         "010-9999-8888",
                         "ROLE_ADMIN"

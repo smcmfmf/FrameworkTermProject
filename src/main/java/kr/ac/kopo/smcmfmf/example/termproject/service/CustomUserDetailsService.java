@@ -17,12 +17,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = memberRepository.findByUsername(username)
+        Member member = memberRepository.findByUserId(username)
                 .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + username));
 
         return User.builder()
-                .username(member.getUsername())
-                .password(member.getPassword())
+                .username(member.getUserId())
+                .password(member.getUserPassword())
                 .roles(member.getRole().replace("ROLE_", "")) // "ADMIN" or "USER"
                 .build();
     }

@@ -23,7 +23,8 @@
         <th>색상</th>
         <th>용도</th>
         <th>인도일</th>
-        <th>고객명</th>
+        <th>고객 성명</th>
+        <th>고객 아이디</th>
         <th>연락처</th>
         <th>이메일</th>
         <th>관리</th>
@@ -36,9 +37,10 @@
         <td th:text="${item.car.color}">White</td>
         <td th:text="${item.usagePurpose}">개인</td>
         <td th:text="${item.deliveryDate}">2025-W16</td>
-        <td th:text="${item.member.username}">홍길동</td>
+        <td th:text="${item.member.userName}">홍길동</td>
+        <td th:text="${item.member.userId}">test</td>
         <td th:text="${item.phone}">010-0000-0000</td>
-        <td th:text="${item.member.email}">test@email.com</td>
+        <td th:text="${item.member.userEmail}">test@email.com</td>
         <td>
             <a th:href="@{/admin/update/{id}(id=${item.id})}">수정</a> |
             <a th:href="@{/admin/delete/{id}(id=${item.id})}" class="btn-del" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
